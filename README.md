@@ -1,10 +1,11 @@
-# sentry-capacitor-unknown-metadata-issue
+# sentry-capacitor-ios-native-metadata-issue
 
 ## Overview
 
-This repo is a reproduction sample app for what appears to be an issue in [Sentry Capacitor](https://github.com/getsentry/sentry-capacitor).
+This repo is a reproduction sample app for a feature request in [Sentry Capacitor](https://github.com/getsentry/sentry-capacitor).
 
 The sample app uses the following libraries at these approximate versions
+
 - Sentry Capacitor - `0.4.2`
 - Capacitor - `3.4.1`
 - Angular - `13.0.0`
@@ -13,6 +14,7 @@ The sample app uses the following libraries at these approximate versions
 The app uses the Ionic Angular "blank" starter app.
 
 ## Setup
+
 - Set up your dev environment for Capacitor development by following the official docs [here](https://capacitorjs.com/docs/getting-started/environment-setup).
 - From the terminal in the root of the repo, run the following commands
   - `npm install`
@@ -23,6 +25,7 @@ The app uses the Ionic Angular "blank" starter app.
 You can use either Capacitor's Live Reload feature or manually build the app (front-end and native) and deploy the native app again. Changes to the native layer will require a subsequent native app build and deployment.
 
 ### Live Reload
+
 - Reference: https://capacitorjs.com/docs/guides/live-reload
 - Works like an `ionic serve` in which the WebView is reloaded after updating TypeScript, HTML, CSS, etc. It prompts for the device/emulator you'd like to deploy to, runs a `cap sync`, starts an `ionic serve`, builds the native app, and deploys the native app to the device/emulator.
 
@@ -43,12 +46,12 @@ You can use either Capacitor's Live Reload feature or manually build the app (fr
 - When the deployment is finished, `capacitor.config.json`, `AndroidManifest.xml`, and `AndroidManifest.xml.orig` may appear as pending changes in source control. They contain temporary configuration changes necessary to facilitate livereload. They should be automatically removed from pending changes upon `Ctrl + C` of the process but manual removal may occasionally be necessary if the clean-up step fails.
 
 ### Manual Build and Deploy
+
 - To build the front-end and copy the files to the native app, run
   - `npm run cap.build`
 - Open the native IDE (if it's not already open) with
   - `npx cap open ios` or `npx cap open android`
 - Use the native IDE to build and deploy the native app.
-
 
 ## Steps to Reproduce
 
@@ -56,11 +59,20 @@ You can use either Capacitor's Live Reload feature or manually build the app (fr
 - Get the app running by following [Running the App](#running-the-app).
 - Once the app is running, click the button that says `Trigger Error`.
   - The click event will be handled in `/src/app/home/home.page.ts`. It will attempt to send the event to Sentry.
-- Wait for a minute or so and the event should appear in Sentry. The name of the error will be `This error should result in unknown metadata`.
+- Wait for a minute or so and the event should appear in Sentry. The name of the error will be `Sentry error for checking native metadata`.
 - View the event in Sentry.
-- The banner will be present that says `There were [x] problems processing this event`.
-- Click `Show` on the banner to view the problems.
-- On iOS the problem will be
-  - `sdkProcessingMetadata: Discarded unknown attribute`
-- On Android the problem will be
-  - `unknown: Discarded unknown attribute`
+- On iOS the following Header sections exist:
+  - USER
+  - BROWSER
+  - DEVICE
+  - OPERATING SYSTEM
+- On Android the following Headers sectinos exsts:
+  - User-Agent
+  - USER
+  - APP
+  - BRWOSER
+  - DEVICE
+  - OPERATING SYSTEM
+  - SDK
+- The DEVICE section for Android contains more details about the device.
+- Would like to see more details about the IOS device.

@@ -13,6 +13,6 @@ export class HomePage {
   ) {}
 
   triggerError() {
-    this.errorService.captureError(new Error('This error should result in unknown metadata'));
+    this.errorService.captureError(new Error('Sentry error for checking native metadata'));
   }
 }
