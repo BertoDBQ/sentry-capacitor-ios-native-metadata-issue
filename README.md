@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repo is a reproduction sample app for a feature request in [Sentry Capacitor](https://github.com/getsentry/sentry-capacitor).
+This repo is a reproduction sample app for a bug with IOS native metadata not included on JS errors in [Sentry Capacitor](https://github.com/getsentry/sentry-capacitor).
 
 The sample app uses the following libraries at these approximate versions
 
@@ -61,18 +61,4 @@ You can use either Capacitor's Live Reload feature or manually build the app (fr
   - The click event will be handled in `/src/app/home/home.page.ts`. It will attempt to send the event to Sentry.
 - Wait for a minute or so and the event should appear in Sentry. The name of the error will be `Sentry error for checking native metadata`.
 - View the event in Sentry.
-- On iOS the following Header sections exist:
-  - USER
-  - BROWSER
-  - DEVICE
-  - OPERATING SYSTEM
-- On Android the following Headers sectinos exsts:
-  - User-Agent
-  - USER
-  - APP
-  - BRWOSER
-  - DEVICE
-  - OPERATING SYSTEM
-  - SDK
-- The DEVICE section for Android contains more details about the device.
-- Would like to see more details about the IOS device.
+- For JS errors IOS native metadata is not included; Android includes the metadata
